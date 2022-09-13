@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class MyAnimation {
-    Texture img;
-    Animation<TextureRegion> anm;
+    private final Texture img;
+    private final Animation<TextureRegion> anm;
     private float time;
 
     public MyAnimation(String name,int row, int col, float fsp, Animation.PlayMode playMode){
@@ -15,9 +15,9 @@ public class MyAnimation {
         TextureRegion[][] regions = reg1.split(img.getWidth()/col, img.getHeight()/row);
         TextureRegion[] tmp = new TextureRegion[regions.length * regions[0].length];
         int cnt = 0;
-        for (int i = 0; i < regions.length; i++) {
+        for (TextureRegion[] region : regions) {
             for (int j = 0; j < regions[0].length; j++) {
-                tmp[cnt++] = regions[i][j];
+                tmp[cnt++] = region[j];
             }
 
         }
