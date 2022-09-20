@@ -3,6 +3,9 @@ package com.mygdx.game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
+import java.util.Collections;
+import java.util.List;
+
 public class MyInputProcessor implements InputProcessor {
 
     private String outString = "";
@@ -22,7 +25,7 @@ public class MyInputProcessor implements InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         if (outString.contains(Input.Keys.toString(keycode))){
-            String tmp = outString.replace(Input.Keys.toString(keycode), "");
+            String tmp = (outString.replace(Input.Keys.toString(keycode), ""));
             outString = tmp;
         }
         return true;
