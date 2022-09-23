@@ -2,31 +2,53 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-
-import java.util.Collections;
-import java.util.List;
+import com.badlogic.gdx.math.Vector2;
 
 public class MyInputProcessor implements InputProcessor {
 
-    private String outString = "";
+//    private String outString = "";
+//
+//    public String getOutString() {
+//        return outString;
+//    }
+    private Vector2 outForce;
 
-    public String getOutString() {
-        return outString;
+
+    public MyInputProcessor() {
+        outForce = new Vector2();
     }
+
+    public Vector2 getVector(){return outForce;}
 
     @Override
     public boolean keyDown(int keycode) {
-        if (!outString.contains(Input.Keys.toString(keycode))){
-            outString += Input.Keys.toString(keycode);
+//        if (!outString.contains(Input.Keys.toString(keycode))){
+//            outString += Input.Keys.toString(keycode);
+//        }
+        String inKey = Input.Keys.toString(keycode).toUpperCase();
+
+        switch (inKey){
+            case "A": outForce.add(-1000.5F, 0);break;
+            case "D": outForce.add(1000.5F, 0);break;
+            case "W": outForce.add(0, -1000.5F);break;
+            case "S": outForce.add(0, 10000.5F);break;
         }
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        if (outString.contains(Input.Keys.toString(keycode))){
-            String tmp = (outString.replace(Input.Keys.toString(keycode), ""));
-            outString = tmp;
+//        if (outString.contains(Input.Keys.toString(keycode))){
+//            String tmp = (outString.replace(Input.Keys.toString(keycode), ""));
+//            outString = tmp;
+//        }
+        String inKey = Input.Keys.toString(keycode).toUpperCase();
+
+        switch (inKey){
+            case "A": outForce.set(0, outForce.y);break;
+            case "D": outForce.set(0, outForce.y);break;
+            case "W": outForce.set(outForce.x, 0);break;
+            case "S": outForce.set(outForce.x, 0);break;
         }
         return true;
     }
