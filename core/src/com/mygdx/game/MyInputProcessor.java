@@ -28,10 +28,11 @@ public class MyInputProcessor implements InputProcessor {
         String inKey = Input.Keys.toString(keycode).toUpperCase();
 
         switch (inKey){
-            case "A": outForce.add(-1000.5F, 0);break;
-            case "D": outForce.add(1000.5F, 0);break;
-            case "W": outForce.add(0, -1000.5F);break;
-            case "S": outForce.add(0, 10000.5F);break;
+            case "A": outForce.add(-1F, 0);break;
+            case "D": outForce.add(1F, 0);break;
+            case "S": outForce.add(0, -1.5F);break;
+            case "SPACE": outForce.add(0, 3.5F);break;
+            case  "W" : outForce.add(0,0.1f);break;
         }
         return true;
     }
@@ -47,8 +48,9 @@ public class MyInputProcessor implements InputProcessor {
         switch (inKey){
             case "A": outForce.set(0, outForce.y);break;
             case "D": outForce.set(0, outForce.y);break;
-            case "W": outForce.set(outForce.x, 0);break;
             case "S": outForce.set(outForce.x, 0);break;
+            case "SPACE": outForce.set(outForce.x, 0);break;
+            case  "W" : outForce.set(0,outForce.y);break;
         }
         return true;
     }

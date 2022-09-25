@@ -2,13 +2,11 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+
 
 import java.awt.*;
 
@@ -19,18 +17,19 @@ public class MenuScreen implements Screen {
     SpriteBatch batch;
     int x, y;
     Rectangle rectangle;
-    public MenuScreen (Game game){
+
+    public MenuScreen(Game game) {
         this.game = game;
         fon = new Texture("fon.png");
         sign = new Texture("play2.png");
-        x = Gdx.graphics.getWidth()/2 - sign.getWidth()/2;
-        y = Gdx.graphics.getHeight()/2 - sign.getHeight()/2;
+        x = Gdx.graphics.getWidth() / 2 - sign.getWidth() / 2;
+        y = Gdx.graphics.getHeight() / 2 - sign.getHeight() / 2;
         rectangle = new Rectangle(x, y, sign.getWidth(), sign.getHeight());
         batch = new SpriteBatch();
         //game.setScreen(new GameScreen());
 
         music = Gdx.audio.newMusic(Gdx.files.internal("George Thorogood - Bad to the Bone_(newmp3.org).mp3"));
-        music.setPan(0,0.025f);
+        music.setPan(0, 0.025f);
         music.setLooping(true);
         music.play();
     }
@@ -44,11 +43,11 @@ public class MenuScreen implements Screen {
     public void render(float delta) {
         //ScreenUtils.clear(Color.BROWN);
         batch.begin();
-        batch.draw(fon,0,0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight()); // отрисовка фона
+        batch.draw(fon, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // отрисовка фона
         batch.draw(sign, x, y);
         batch.end();
 
-        if (Gdx.input.isTouched()){
+        if (Gdx.input.isTouched()) {
             if (rectangle.contains(Gdx.input.getX(), Gdx.input.getY())) {
                 dispose();
                 game.setScreen(new GameScreen(game));

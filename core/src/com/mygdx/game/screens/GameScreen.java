@@ -46,9 +46,9 @@ public class GameScreen implements Screen {
         mapRenderer = new OrthogonalTiledMapRenderer(map);
 
         front = new int[1];
-        front[0] = map.getLayers().getIndex("front");
+        front[0] = map.getLayers().getIndex("Слой тайлов 2");
         tL = new int[1];
-        tL[0] = map.getLayers().getIndex("t0");
+        tL[0] = map.getLayers().getIndex("Слой тайлов 1");
 
         gamePhysics = new GamePhysics();
 
@@ -180,7 +180,7 @@ public class GameScreen implements Screen {
 
         camera.position.x = body.getPosition().x * gamePhysics.PPM;
         camera.position.y = body.getPosition().y * gamePhysics.PPM;
-        camera.zoom = 1f;
+        camera.zoom = 0.7f;
         camera.update();
 
         mapRenderer.setView(camera);
@@ -217,6 +217,8 @@ public class GameScreen implements Screen {
             actions = Actions.STAND;
         } else if (Math.abs(body.getLinearVelocity().x) > 0.6f) {
             actions = Actions.RUN;
+        } else if (body.getLinearVelocity().len() < 0f){
+            actions = Actions.SIT;
         }
 
 
@@ -238,13 +240,13 @@ public class GameScreen implements Screen {
 //		}
 
 
-        float x = body.getPosition().x * gamePhysics.PPM -10f/camera.zoom;
-        float y = body.getPosition().y * gamePhysics.PPM -10f/camera.zoom;
+        float x = body.getPosition().x * gamePhysics.PPM -2.5f/camera.zoom;
+        float y = body.getPosition().y * gamePhysics.PPM -2.5f/camera.zoom;
 
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(manAssetss.get(actions).draw(), x, y);
+        batch.draw(manAssetss.get(actions).draw(), x, y,25/camera.zoom, 20/camera.zoom);
         batch.end();
 
         mapRenderer.render(front);
