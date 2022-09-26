@@ -2,7 +2,6 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.mygdx.game.MyGdxGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
@@ -11,6 +10,6 @@ public class DesktopLauncher {
 		config.setWindowedMode(800,640);
 
 		config.setAudioConfig(32, 512, 9);
-		new Lwjgl3Application(new MyGdxGame(), config);
+		new Lwjgl3Application(new Main(), config);
 	}
 }
