@@ -26,7 +26,6 @@ public class MenuScreen implements Screen {
         y = Gdx.graphics.getHeight() / 2 - sign.getHeight() / 2;
         rectangle = new Rectangle(x, y, sign.getWidth(), sign.getHeight());
         batch = new SpriteBatch();
-        //game.setScreen(new GameScreen());
 
         music = Gdx.audio.newMusic(Gdx.files.internal("George Thorogood - Bad to the Bone_(newmp3.org).mp3"));
         music.setPan(0, 0.025f);
@@ -41,7 +40,6 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        //ScreenUtils.clear(Color.BROWN);
         batch.begin();
         batch.draw(fon, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // отрисовка фона
         batch.draw(sign, x, y);

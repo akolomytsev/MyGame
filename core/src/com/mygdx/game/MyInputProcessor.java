@@ -5,8 +5,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
 public class MyInputProcessor implements InputProcessor {
-
-    //private String outString = "";
     private boolean sitting = false;
     public boolean isSitting() {
         return sitting;
@@ -16,10 +14,6 @@ public class MyInputProcessor implements InputProcessor {
         return up;
     }
 
-
-//    public String getOutString() {
-//        return outString;
-//    }
     private Vector2 outForce;
 
 
@@ -31,9 +25,6 @@ public class MyInputProcessor implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-//        if (!outString.contains(Input.Keys.toString(keycode))){
-//            outString += Input.Keys.toString(keycode);
-//        }
         String inKey = Input.Keys.toString(keycode).toUpperCase();
 
         switch (inKey){
@@ -41,7 +32,6 @@ public class MyInputProcessor implements InputProcessor {
             case "D": outForce.add(1F, 0);break;
             case "SPACE": outForce.add(0, 2.5F);break;
             case "S": sitting = true; break;
-//            case "S": outForce.add(0, 0);break;
             case  "W" : up = true; break;
         }
         return true;
@@ -49,17 +39,12 @@ public class MyInputProcessor implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-//        if (outString.contains(Input.Keys.toString(keycode))){
-//            String tmp = (outString.replace(Input.Keys.toString(keycode), ""));
-//            outString = tmp;
-//        }
         String inKey = Input.Keys.toString(keycode).toUpperCase();
 
         switch (inKey){
             case "A": outForce.set(0, outForce.y);break;
             case "D": outForce.set(0, outForce.y);break;
             case "S": sitting = false; break;
-//            case "S": outForce.set(outForce.x, 0);break;
             case "SPACE": outForce.set(outForce.x, 0);break;
             case  "W" : up = false; break;
         }

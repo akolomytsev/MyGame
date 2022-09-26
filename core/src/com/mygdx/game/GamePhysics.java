@@ -24,8 +24,6 @@ public class GamePhysics {
         BodyDef def = new BodyDef();
         FixtureDef fdef = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
-//        CircleShape circleShape;
-//        ChainShape chainShape;
 
         if (type.equals("StaticBody")) def.type = BodyDef.BodyType.StaticBody;
         if (type.equals("DynamicBody")) def.type = BodyDef.BodyType.DynamicBody;

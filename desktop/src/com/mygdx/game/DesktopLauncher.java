@@ -10,7 +10,6 @@ public class DesktopLauncher {
 		config.setWindowedMode(800,640);
 
 		config.setAudioConfig(32, 512, 9);
-		//new Lwjgl3Application(new MyGdxGame(), config);
 		new Lwjgl3Application(new Main(), config);
 	}
 }
