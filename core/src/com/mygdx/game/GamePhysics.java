@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 public class GamePhysics {
-    public final float PPM = 100;
+    public final float PPM = 10;
     public final World world;
     private final Box2DDebugRenderer dDebugRenderer;
 

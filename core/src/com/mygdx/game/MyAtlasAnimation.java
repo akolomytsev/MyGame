@@ -17,7 +17,6 @@ public class MyAtlasAnimation {
     public MyAtlasAnimation(String atlas, String name, float fsp, boolean playMode, String sound){
         if (playMode) loop = true;
         this.sound = Gdx.audio.newSound(Gdx.files.internal(sound));
-        //this.sound.play();
         time = 0;
         this.atlas = new TextureAtlas(atlas);
         anm = new Animation<>(1/fsp, this.atlas.findRegions(name));
@@ -32,7 +31,6 @@ public class MyAtlasAnimation {
     public void setTime (float dT){
         time +=dT;
         if (time > d && time > anm.getAnimationDuration() ){
-            sound.play();
             d *=2;
         } else if (time >= anm.getAnimationDuration() && loop){
             time = 0;

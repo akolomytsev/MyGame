@@ -147,7 +147,7 @@ public class GameScreen implements Screen {
         manAssetss = new HashMap<>();
         manAssetss.put(Actions.STAND, new MyAtlasAnimation("atlas/men.atlas","stand",2, false, "beg-po-trotuiarty.mp3"));
         //stand =new MyAtlasAnimation("atlas/men.atlas","stand",2, false, "beg-po-trotuiarty.mp3");
-        manAssetss.put(Actions.RUN, new MyAtlasAnimation("atlas/men.atlas","run",20, false, "beg-po-trotuiarty.mp3"));
+        manAssetss.put(Actions.RUN, new MyAtlasAnimation("atlas/men.atlas","run",5, false, "beg-po-trotuiarty.mp3"));
         //run =new MyAtlasAnimation("atlas/men.atlas","run",20, false, "beg-po-trotuiarty.mp3");
         manAssetss.put(Actions.JUMP, new MyAtlasAnimation("atlas/men.atlas","jamp",3, false, "beg-po-trotuiarty.mp3"));
         //jump =new MyAtlasAnimation("atlas/men.atlas","jump",3, false, "beg-po-trotuiarty.mp3");
@@ -213,12 +213,22 @@ public class GameScreen implements Screen {
         manAssetss.get(actions).setTime(Gdx.graphics.getDeltaTime());
         body.applyForceToCenter(myInputProcessor.getVector(), true);
 
-        if (body.getLinearVelocity().len() < 0.6f){
+        if (body.getLinearVelocity().len() < 0.1f){
             actions = Actions.STAND;
-        } else if (Math.abs(body.getLinearVelocity().x) > 0.6f) {
+        }
+        if (Math.abs(body.getLinearVelocity().x) > 0.1f) {
             actions = Actions.RUN;
-        } else if (body.getLinearVelocity().len() < 0f){
+        }
+        if (Math.abs(body.getLinearVelocity().y) > 0.1f) {
+            actions = Actions.JUMP;
+        }
+        if (myInputProcessor.isSitting()) {
             actions = Actions.SIT;
+        }
+        if (myInputProcessor.isUp()){
+            actions = Actions.UP;
+//        }else if (body.getLinearVelocity().y == 0f){
+//            actions = Actions.UP;
         }
 
 

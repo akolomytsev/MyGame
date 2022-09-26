@@ -6,8 +6,17 @@ import com.badlogic.gdx.math.Vector2;
 
 public class MyInputProcessor implements InputProcessor {
 
-//    private String outString = "";
-//
+    //private String outString = "";
+    private boolean sitting = false;
+    public boolean isSitting() {
+        return sitting;
+    }
+    private boolean up = false;
+    public boolean isUp() {
+        return up;
+    }
+
+
 //    public String getOutString() {
 //        return outString;
 //    }
@@ -30,9 +39,10 @@ public class MyInputProcessor implements InputProcessor {
         switch (inKey){
             case "A": outForce.add(-1F, 0);break;
             case "D": outForce.add(1F, 0);break;
-            case "S": outForce.add(0, -1.5F);break;
-            case "SPACE": outForce.add(0, 3.5F);break;
-            case  "W" : outForce.add(0,0.1f);break;
+            case "SPACE": outForce.add(0, 2.5F);break;
+            case "S": sitting = true; break;
+//            case "S": outForce.add(0, 0);break;
+            case  "W" : up = true; break;
         }
         return true;
     }
@@ -48,9 +58,10 @@ public class MyInputProcessor implements InputProcessor {
         switch (inKey){
             case "A": outForce.set(0, outForce.y);break;
             case "D": outForce.set(0, outForce.y);break;
-            case "S": outForce.set(outForce.x, 0);break;
+            case "S": sitting = false; break;
+//            case "S": outForce.set(outForce.x, 0);break;
             case "SPACE": outForce.set(outForce.x, 0);break;
-            case  "W" : outForce.set(0,outForce.y);break;
+            case  "W" : up = false; break;
         }
         return true;
     }
