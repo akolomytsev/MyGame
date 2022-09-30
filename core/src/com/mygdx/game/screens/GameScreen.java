@@ -114,7 +114,6 @@ public class GameScreen implements Screen {
         mapRenderer.setView(camera);
         mapRenderer.render(tL); // отрисовываем то что будет на слое за персонажем
 
-        //manAssetss.get(actions).setTime(Gdx.graphics.getDeltaTime());
         hero.setTime(delta); //пересчет времени анимации
         Vector2 vector = myInputProcessor.getVector();
         if (MyContactListener.cnt < 1) vector.set(vector.x, 0);
@@ -122,36 +121,11 @@ public class GameScreen implements Screen {
         body.applyForceToCenter(myInputProcessor.getVector(), true);// тело принимает силу в центр из getVector
 
         hero.setFPS(body.getLinearVelocity(), true);// получает текущую линейную скорость тела
-//
-//        if (body.getLinearVelocity().len() < 0.1f){
-//            actions = Actions.STAND;
-//        }
-//        if (Math.abs(body.getLinearVelocity().x) > 0.1f) {
-//            actions = Actions.RUN;
-//        }
-//        if (Math.abs(body.getLinearVelocity().y) > 0.1f) {
-//            actions = Actions.JUMP;
-//        }
-//        if (myInputProcessor.isSitting()) {
-//            actions = Actions.SIT;
-//        }
-//        if (myInputProcessor.isUp()){
-//            actions = Actions.UP;
-//        }
-//
-//        manAssetss.get(actions).setTime(Gdx.graphics.getDeltaTime());
-//        if (!manAssetss.get(actions).draw().isFlipX() & body.getLinearVelocity().x < -0.6f) {manAssetss.get(actions).draw().flip(true, false);}
-//        if (manAssetss.get(actions).draw().isFlipX() & body.getLinearVelocity().x > 0.6f) {manAssetss.get(actions).draw().flip(true, false);}
-//
-//        float x = body.getPosition().x * gamePhysics.PPM -2.5f/camera.zoom;
-//        float y = body.getPosition().y * gamePhysics.PPM -2.5f/camera.zoom;
+
         Rectangle tmp = hero.getRect(camera, hero.getFrame());
         ((PolygonShape)body.getFixtureList().get(0).getShape()).setAsBox(tmp.width/2, tmp.height/2);// Высчитываем размер нашего полигона в данное кремя (всех полигонов из атласа)
         ((PolygonShape)body.getFixtureList().get(1).getShape()).setAsBox(tmp.width/3, tmp.height/10, new Vector2(0,-tmp.height/2), 0);
-//        ((PolygonShape)body.getFixtureList().get(1).getShape()).setAsBox(
-//                tmp.width/3,
-//                tmp.height/10,
-//                new Vector2(0, -tmp.height/2),0);
+
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(hero.getFrame(), tmp.x, tmp.y,tmp.width*GamePhysics.PPM, tmp.height * GamePhysics.PPM );
@@ -161,7 +135,7 @@ public class GameScreen implements Screen {
         TextureRegion tr = coinAnm.draw();
         float dScale = 6;
         for (Body bd: bodies){
-            //tmp = hero.getRect(camera, manAnm.draw());
+
             float cx = bd.getPosition().x * GamePhysics.PPM - tr.getRegionWidth() / 2 / dScale;
             float cy = bd.getPosition().y * GamePhysics.PPM - tr.getRegionHeight() / 2 / dScale;
             float cW = tr.getRegionWidth() / GamePhysics.PPM / dScale;
@@ -170,7 +144,7 @@ public class GameScreen implements Screen {
             batch.draw(tr, cx, cy,cW * GamePhysics.PPM, cH * GamePhysics.PPM );
 
         }
-         // отрисовываем то что будет перед персонажем (перекрывать персонажа)
+
 
         batch.end();
         //Gdx.graphics.setTitle(String.valueOf(body.getLinearVelocity()));

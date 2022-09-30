@@ -3,7 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.persons.Hero;
+
 
 public class MyInputProcessor implements InputProcessor {
     private boolean sitting = false;
