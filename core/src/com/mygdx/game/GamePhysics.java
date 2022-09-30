@@ -5,9 +5,13 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import java.util.Iterator;
+
+import com.badlogic.gdx.utils.Array;
 
 public class GamePhysics {
-    public final float PPM = 10;
+    public final MyContactListener contactListener;
+    public static final float PPM = 100;
     public final World world;
     private final Box2DDebugRenderer dDebugRenderer;
 
@@ -16,6 +20,26 @@ public class GamePhysics {
     public GamePhysics() {
         world = new World(new Vector2(0, -9.81f), true);
         this.dDebugRenderer = new Box2DDebugRenderer();
+
+        contactListener = new MyContactListener();
+        world.setContactListener(contactListener);
+    }
+
+    public void  removeBody(Body body){
+        world.destroyBody(body); // метод для удаления тел при пересечении
+    }
+
+    public void destroyBody(Body body){world.destroyBody(body);}
+
+    public Array<Body> getBodys(String name) {
+        Array<Body> tmp = new Array<>();
+        world.getBodies(tmp); // возвращает список всех тел которые находятся в MyMap.tmx
+        Iterator<Body> it = tmp.iterator();
+        while (it.hasNext()){// выбираем которые нам не нужны и удаляем
+            Body body = it.next();
+            if (!body.getUserData().equals("coins")) it.remove();
+        }
+        return tmp;
     }
 
     public Body addObject(RectangleMapObject object) {
@@ -43,8 +67,15 @@ public class GamePhysics {
         if (object.getName() != null) name = object.getName();
         Body body;
         body = world.createBody(def);
-        body.setUserData("body");
+        body.setUserData(name);
         body.createFixture(fdef).setUserData(name);
+
+        if (name.equals("Гера")){
+            polygonShape.setAsBox(rect.width/3/PPM, rect.height/10/PPM, new Vector2(0,-rect.width/2), 0);
+            body.createFixture(fdef).setUserData("legs");
+            body.getFixtureList().get(1).setSensor(true);
+        }
+
         polygonShape.dispose();
         return body;
     }

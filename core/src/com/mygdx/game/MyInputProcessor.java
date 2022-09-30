@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.persons.Hero;
 
 public class MyInputProcessor implements InputProcessor {
     private boolean sitting = false;
@@ -28,9 +29,9 @@ public class MyInputProcessor implements InputProcessor {
         String inKey = Input.Keys.toString(keycode).toUpperCase();
 
         switch (inKey){
-            case "A": outForce.add(-1F, 0);break;
-            case "D": outForce.add(1F, 0);break;
-            case "SPACE": outForce.add(0, 2.5F);break;
+            case "A": outForce.add(-0.003F, 0);break;
+            case "D": outForce.add(0.003F, 0);break;
+            case "SPACE": if (MyContactListener.cnt>0) outForce.add(0, 0.01F);break;
             case "S": sitting = true; break;
             case  "W" : up = true; break;
         }
