@@ -2,12 +2,13 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
-import com.mygdx.game.persons.Hero;
+
 import com.mygdx.game.screens.GameScreen;
 
 public class MyContactListener implements ContactListener {
 
     public static int cnt = 0;
+    public static boolean isDamage;
 
     @Override
     public void beginContact(Contact contact) { //во время начала контакта (обработка при начале пересечения)
@@ -33,6 +34,13 @@ public class MyContactListener implements ContactListener {
             //Hero.canJump = true;
             cnt++;
         }
+        if (a.getUserData().equals("legs") && b.getUserData().equals("damage")){ //
+            isDamage = true;
+        }
+        if (b.getUserData().equals("legs") && a.getUserData().equals("damage")){ //
+            isDamage = true;
+
+        }
     }
 
     @Override
@@ -40,13 +48,13 @@ public class MyContactListener implements ContactListener {
         Fixture a = contact.getFixtureA(); // первое произвольное тело
         Fixture b = contact.getFixtureB(); // второе произвольное тело
 
-        if (a.getUserData().equals("Гера") && b.getUserData().equals("coins")){ // если тело не равно телу с именем Гера и равно coins
-            //Gdx.graphics.setTitle(String.valueOf(--cnt));
-
-        }
-        if (b.getUserData().equals("Гера") && a.getUserData().equals("coins")){ // то же самое второй раз что бы точно одна из фикстур сработала
-            //Gdx.graphics.setTitle(String.valueOf(--cnt));
-        }
+//        if (a.getUserData().equals("Гера") && b.getUserData().equals("coins")){ // если тело не равно телу с именем Гера и равно coins
+//            //Gdx.graphics.setTitle(String.valueOf(--cnt));
+//
+//        }
+//        if (b.getUserData().equals("Гера") && a.getUserData().equals("coins")){ // то же самое второй раз что бы точно одна из фикстур сработала
+//            //Gdx.graphics.setTitle(String.valueOf(--cnt));
+//        }
         if (a.getUserData().equals("legs") && b.getUserData().equals("stone")){ //
             //Hero.canJump = false;
             cnt--;
@@ -54,6 +62,13 @@ public class MyContactListener implements ContactListener {
         if (b.getUserData().equals("legs") && a.getUserData().equals("stone")){ //
             //Hero.canJump = false;
             cnt--;
+        }
+        if (a.getUserData().equals("legs") && b.getUserData().equals("damage")){ //
+            isDamage = false;
+        }
+        if (b.getUserData().equals("legs") && a.getUserData().equals("damage")){ //
+            isDamage = false;
+
         }
     }
 

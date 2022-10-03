@@ -5,8 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -16,17 +18,19 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
+
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.GamePhysics;
+import com.mygdx.game.LabelHP;
 import com.mygdx.game.MyContactListener;
 import com.mygdx.game.MyInputProcessor;
 import com.mygdx.game.enums.Actions;
 import com.mygdx.game.persons.Hero;
 
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +39,6 @@ public class GameScreen implements Screen {
     Game game;
 
     private final SpriteBatch batch;
-    //private final HashMap<Actions, MyAtlasAnimation> manAssetss;
     private final Music music;
     private Sound sound;
     private MyInputProcessor myInputProcessor;
@@ -51,7 +54,13 @@ public class GameScreen implements Screen {
     private final AnimationMan coinAnm;
     public static List<Body> bodyToDelete;
 
+    private final LabelHP font;
+
     public GameScreen(Game game) {
+
+        font = new LabelHP(15);// новый экземпляр лоя надписи
+
+
         bodyToDelete = new ArrayList<>();
         coinAnm = new AnimationMan("Full Coinss.png", 1, 8, 12f, Animation.PlayMode.LOOP);
         this.game = game;
@@ -71,6 +80,13 @@ public class GameScreen implements Screen {
         for (int i = 0; i < objects.size; i++) {
             gamePhysics.addObject(objects.get(i));
         }
+        objects.clear();
+        objects.addAll(map.getLayers().get("lava").getObjects().getByType(RectangleMapObject.class));
+        objects.addAll(map.getLayers().get("spikes").getObjects().getByType(RectangleMapObject.class));
+        for (int i = 0; i < objects.size; i++) {
+            gamePhysics.addDMGObject(objects.get(i));
+        }
+
         body = gamePhysics.addObject((RectangleMapObject) map.getLayers().get("Гера").getObjects().get("Гера"));
         body.setFixedRotation(true); // защита от вращения
         hero = new Hero(body);
@@ -80,16 +96,8 @@ public class GameScreen implements Screen {
 
         batch = new SpriteBatch();
 
-//        manAssetss = new HashMap<>();
-//        manAssetss.put(Actions.STAND, new MyAtlasAnimation("atlas/men.atlas","stand",2, false, "beg-po-trotuiarty.mp3"));
-//        manAssetss.put(Actions.RUN, new MyAtlasAnimation("atlas/men.atlas","run",5, false, "beg-po-trotuiarty.mp3"));
-//        manAssetss.put(Actions.JUMP, new MyAtlasAnimation("atlas/men.atlas","jamp",3, false, "beg-po-trotuiarty.mp3"));
-//        manAssetss.put(Actions.UP, new MyAtlasAnimation("atlas/men.atlas","up",1, false, "beg-po-trotuiarty.mp3"));
-//        manAssetss.put(Actions.SIT, new MyAtlasAnimation("atlas/men.atlas","sit",3, false, "beg-po-trotuiarty.mp3"));
-//        actions = Actions.STAND;
-
         music = Gdx.audio.newMusic(Gdx.files.internal("George Thorogood - Bad to the Bone_(newmp3.org).mp3"));
-        music.setPan(0,0.025f);
+        music.setPan(0,0.001f);
         music.setLooping(true);
         music.play();
 
@@ -108,8 +116,10 @@ public class GameScreen implements Screen {
 
         camera.position.x = body.getPosition().x * gamePhysics.PPM;
         camera.position.y = body.getPosition().y * gamePhysics.PPM;
-        camera.zoom = 0.7f;
+        //camera.zoom = 0.35f;
         camera.update();
+
+
 
         mapRenderer.setView(camera);
         mapRenderer.render(tL); // отрисовываем то что будет на слое за персонажем
@@ -117,10 +127,17 @@ public class GameScreen implements Screen {
         hero.setTime(delta); //пересчет времени анимации
         Vector2 vector = myInputProcessor.getVector();
         if (MyContactListener.cnt < 1) vector.set(vector.x, 0);
+
         body.applyForceToCenter(vector, true);
         body.applyForceToCenter(myInputProcessor.getVector(), true);// тело принимает силу в центр из getVector
 
         hero.setFPS(body.getLinearVelocity(), true);// получает текущую линейную скорость тела
+
+//        if(myInputProcessor.isSitting()){
+//            hero.setState(Actions.SIT);
+//        } else if(myInputProcessor.isUp()){
+//            hero.setState(Actions.UP);
+//        } else {hero.setState(Actions.STAND);}
 
         Rectangle tmp = hero.getRect(camera, hero.getFrame());
         ((PolygonShape)body.getFixtureList().get(0).getShape()).setAsBox(tmp.width/2, tmp.height/2);// Высчитываем размер нашего полигона в данное кремя (всех полигонов из атласа)
@@ -128,6 +145,7 @@ public class GameScreen implements Screen {
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        font.draw(batch, "hp: "+ String.valueOf(hero.getHit(0)), tmp.x, tmp.y + tmp.height * GamePhysics.PPM);
         batch.draw(hero.getFrame(), tmp.x, tmp.y,tmp.width*GamePhysics.PPM, tmp.height * GamePhysics.PPM );
 
         Array<Body> bodies = gamePhysics.getBodys("coins"); //получили тела со всех слоев физ мира с данным именем
@@ -147,7 +165,7 @@ public class GameScreen implements Screen {
 
 
         batch.end();
-        //Gdx.graphics.setTitle(String.valueOf(body.getLinearVelocity()));
+        //Gdx.graphics.setTitle(String.valueOf(body.getLinearVelocity())); //координаты
         mapRenderer.render(front);
 
 
@@ -159,6 +177,16 @@ public class GameScreen implements Screen {
         gamePhysics.step();
 
         gamePhysics.debugDraw(camera);
+
+
+        if (MyContactListener.isDamage) {
+            if (hero.getHit(1) < 1){
+                dispose();
+                game.setScreen(new GameOverScreen(game));
+            }
+        }
+
+
     }
 
     @Override
@@ -186,5 +214,9 @@ public class GameScreen implements Screen {
         sound.dispose();
         mapRenderer.dispose();
         map.dispose();
+        this.hero.dispose();
+        this.font.dispose();
+        this.gamePhysics.dispose();
+        this.coinAnm.dispose();
     }
 }

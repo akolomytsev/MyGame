@@ -80,6 +80,31 @@ public class GamePhysics {
         return body;
     }
 
+    public void addDMGObject(RectangleMapObject object) {
+        Rectangle rect = object.getRectangle();
+        String type = (String) object.getProperties().get("BodyType");
+        BodyDef def = new BodyDef();
+        FixtureDef fdef = new FixtureDef();
+        PolygonShape polygonShape = new PolygonShape();
+
+        def.type = BodyDef.BodyType.StaticBody;
+        def.position.set((rect.x + rect.width/2)/PPM, (rect.y + rect.height/2)/PPM);
+        polygonShape.setAsBox(rect.width/2/PPM, rect.height/2/PPM);
+        fdef.shape = polygonShape;
+
+        String name = "damage";
+        Body body;
+        body = world.createBody(def);
+        body.setUserData(name);
+        body.createFixture(fdef).setUserData(name);
+        body.getFixtureList().get(0).setSensor(true);
+        body.createFixture(fdef).setUserData(name);
+
+        polygonShape.dispose();
+
+    }
+
+
     public void debugDraw (OrthographicCamera camera){
         dDebugRenderer.render(world, camera.combined);
     }
@@ -89,5 +114,9 @@ public class GamePhysics {
     public void dispose (){
         world.dispose();
         dDebugRenderer.dispose();
+        MyContactListener.isDamage = false;
+
     }
+
+
 }

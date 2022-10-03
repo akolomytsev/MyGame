@@ -29,9 +29,9 @@ public class MyInputProcessor implements InputProcessor {
         String inKey = Input.Keys.toString(keycode).toUpperCase();
 
         switch (inKey){
-            case "A": outForce.add(-0.003F, 0);break;
-            case "D": outForce.add(0.003F, 0);break;
-            case "SPACE": if (MyContactListener.cnt>0) outForce.add(0, 0.01F);break;
+            case "A": outForce.add(-0.002F, 0);break;
+            case "D": outForce.add(0.002F, 0);break;
+            case "SPACE": if (MyContactListener.cnt>0) outForce.add(0, 0.02F);break;
             case "S": sitting = true; break;
             case  "W" : up = true; break;
         }

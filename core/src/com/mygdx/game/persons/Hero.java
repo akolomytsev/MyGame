@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class Hero {
     HashMap<Actions, Animation<TextureRegion>> manAssetss; //
-    private final float FPS = 1f;// Основная скорость персонажа вынесена константой
+    private final float FPS = 1/7f;// Основная скорость персонажа вынесена константой
     private float time;// время
     public static boolean canJump;//
     private Animation<TextureRegion> baseAnm;//
@@ -22,12 +22,14 @@ public class Hero {
     private TextureAtlas atlas;// текстурный атлас героя
     private Body body;//
     private Dir dir;//
-    private static float dScale = 2.8f;// принудительный масштаб атласа героя
-    //public enum Dir{LEFT, RIGHT}
+    private static float dScale = 7f;// принудительный масштаб атласа героя
+
+    private float hitPoints, live;
     public enum Dir{A, D}//
 
 
 public Hero(Body body){// конструктор описывающий физическое тело в игровом физическом мире
+        hitPoints = live = 100;
         this.body = body;
 
         manAssetss = new HashMap<>();//
@@ -43,13 +45,18 @@ public Hero(Body body){// конструктор описывающий физи
         dir = Dir.A;//
 }
 
+    public float getHit (float damage){
+        hitPoints -= damage;
+        return hitPoints;
+    }
+
     public boolean isCanJump() {return canJump;}//
     public static void setCanJump(boolean isJump) {canJump = isJump;}//
     public void setDir(Dir dir){this.dir = dir;}// установка направления героя
     public void setLoop(boolean loop) {this.loop = loop;}// кусочек анимации
     public void setFPS(Vector2 vector, boolean onGround) {// класс увеличения скорости картинки относительно его физической скорости (передаются вектор скорости и стоит ли герой на земле)
-        if (vector.x > 0.1f) setDir(Dir.D);//
-        if (vector.x < -0.1f) setDir(Dir.A);//
+        if (vector.x > 0.01f) setDir(Dir.D);//
+        if (vector.x < -0.01f) setDir(Dir.A);//
         float tmp = (float) (Math.sqrt(vector.x*vector.x + vector.y*vector.y))*10;// вычисляем вектор средней скорости
         setState(Actions.STAND);//
         if (Math.abs(vector.x) > 0.25f && Math.abs(vector.y) < 10 && onGround) {// увеличиваем скорость отображения картинки
@@ -60,6 +67,11 @@ public Hero(Body body){// конструктор описывающий физи
             setState(Actions.JUMP);//
             baseAnm.setFrameDuration(FPS);//
         }
+//        if(myInputProcessor.isSitting()){
+//            hero.setState(Actions.SIT);
+//        } else if(myInputProcessor.isUp()){
+//            hero.setState(Actions.UP);
+//        } else {hero.setState(Actions.STAND);}
     }
 
     public float setTime(float deltaTime) {//
@@ -85,7 +97,7 @@ public Hero(Body body){// конструктор описывающий физи
         return tr;
     }
 
-    public Rectangle getRect(OrthographicCamera camera, TextureRegion region) {// получаем размер конкретного кадра из фтласа
+    public Rectangle getRect(OrthographicCamera camera, TextureRegion region) {// получаем размер конкретного кадра из атласа
         TextureRegion tr = baseAnm.getKeyFrame(time);
         //TextureRegion tr = region;
         float cx = body.getPosition().x * GamePhysics.PPM - tr.getRegionWidth() / 2 / dScale;
