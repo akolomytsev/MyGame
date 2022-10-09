@@ -15,6 +15,14 @@ public class MyContactListener implements ContactListener {
         Fixture a = contact.getFixtureA(); // первое произвольное тело
         Fixture b = contact.getFixtureB(); // второе произвольное тело
 
+        if (a.getUserData().equals("bullet") && b.getUserData().equals("stone")){
+            GameScreen.bodyToDelete.add(a.getBody());
+
+        }
+        if (b.getUserData().equals("bullet") && a.getUserData().equals("stone")){
+            GameScreen.bodyToDelete.add(b.getBody());
+        }
+
         if (a.getUserData().equals("Гера") && b.getUserData().equals("coins")){ // если тело не равно телу с именем Гера и равно coins
             //Gdx.graphics.setTitle(String.valueOf(++cnt)); // простой счетчик с выводом в шапку приложения
             GameScreen.bodyToDelete.add(b.getBody());

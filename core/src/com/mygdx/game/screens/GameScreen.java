@@ -27,6 +27,7 @@ import com.mygdx.game.LabelHP;
 import com.mygdx.game.MyContactListener;
 import com.mygdx.game.MyInputProcessor;
 import com.mygdx.game.enums.Actions;
+import com.mygdx.game.persons.Bullet;
 import com.mygdx.game.persons.Hero;
 
 
@@ -51,17 +52,25 @@ public class GameScreen implements Screen {
     private Actions actions;
     private int[] front, tL;
     private final Hero hero;
-    private final AnimationMan coinAnm;
+    private AnimationMan coinAnm;
     public static List<Body> bodyToDelete;
+    public static List<Bullet> bullets;
+
+    private int coins, bulletsCnt;
+
 
     private final LabelHP font;
 
     public GameScreen(Game game) {
 
+        bulletsCnt = 100;
+        coins = 0;
         font = new LabelHP(15);// новый экземпляр лоя надписи
 
-
         bodyToDelete = new ArrayList<>();
+
+        bullets = new ArrayList<>();
+
         coinAnm = new AnimationMan("Full Coinss.png", 1, 8, 12f, Animation.PlayMode.LOOP);
         this.game = game;
 
@@ -102,7 +111,7 @@ public class GameScreen implements Screen {
         music.play();
 
         camera = new OrthographicCamera();
-        camera.zoom = 0.35f;
+        camera.zoom = 0.2f;
     }
 
     @Override
@@ -126,9 +135,30 @@ public class GameScreen implements Screen {
 
         hero.setTime(delta); //пересчет времени анимации
         Vector2 vector = myInputProcessor.getVector();
-        if (MyContactListener.cnt < 1) vector.set(vector.x, 0);
+        Body body1 = hero.setFPS(body.getLinearVelocity(), true);
+        if (body1 != null && bulletsCnt > 0){
+            bulletsCnt--;
+            bullets.add(new Bullet(gamePhysics, body1.getPosition().x, body1.getPosition().y, hero.getDir()));
+            vector.set(0, 0);
+        } else if (body1 != null){
+            vector.set(0, 0);
+            hero.setState(Actions.STAND);
+        }
+        if (MyContactListener.cnt < 1) {
+            vector.set(vector.x, 0);
+        }
 
         body.applyForceToCenter(vector, true);
+
+        ArrayList<Bullet> bTmp = new ArrayList<>();
+        for (Bullet b: bullets){
+            Body tB = b.update(delta);
+            if (tB != null){
+                bodyToDelete.add(tB);
+                bTmp.add(b);};
+        }
+        bullets.removeAll(bTmp);
+
         body.applyForceToCenter(myInputProcessor.getVector(), true);// тело принимает силу в центр из getVector
 
         hero.setFPS(body.getLinearVelocity(), true);// получает текущую линейную скорость тела
@@ -170,6 +200,10 @@ public class GameScreen implements Screen {
 
 
         for (Body bd: bodyToDelete){
+            if (bd.getUserData() != null && bd.getUserData().equals("coins")){ coins++;}
+            if (bd.getUserData() != null && bd.getUserData().equals("coins"))
+
+
             gamePhysics.destroyBody(bd);// удаляем сами тела из физики
         }
         bodyToDelete.clear(); //зачем чистим

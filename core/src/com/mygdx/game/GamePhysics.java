@@ -80,6 +80,23 @@ public class GamePhysics {
         return body;
     }
 
+    public Body addBullet(float x, float y) {
+        BodyDef def = new BodyDef();
+        FixtureDef fdef = new FixtureDef();
+        PolygonShape polygonShape = new PolygonShape();
+        def.type = BodyDef.BodyType.DynamicBody;
+        def.position.set(x, y);
+        polygonShape.setAsBox(0.05f/PPM, 0.05f/PPM);
+        fdef.shape = polygonShape;
+        Body body;
+        body = world.createBody(def);
+        body.setUserData("bullet");
+        body.createFixture(fdef).setUserData("bullet");
+        body.getFixtureList().get(0).setSensor(true);
+        polygonShape.dispose();
+        return body;
+    }
+
     public void addDMGObject(RectangleMapObject object) {
         Rectangle rect = object.getRectangle();
         String type = (String) object.getProperties().get("BodyType");

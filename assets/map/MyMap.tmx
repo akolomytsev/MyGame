@@ -244,7 +244,7 @@
   </object>
   <object id="101" name="stone" x="728.125" y="304.5" width="81.75" height="16">
    <properties>
-    <property name="BodyType" value="DynamicBody"/>
+    <property name="BodyType" value="StaticBody"/>
     <property name="friction" type="float" value="0"/>
     <property name="gravityScale" type="float" value="1"/>
     <property name="restitution" type="float" value="0.25"/>
@@ -252,7 +252,7 @@
   </object>
   <object id="102" name="stone" x="0" y="352" width="400" height="16">
    <properties>
-    <property name="BodyType" value="DynamicBody"/>
+    <property name="BodyType" value="StaticBody"/>
     <property name="friction" type="float" value="0"/>
     <property name="gravityScale" type="float" value="1"/>
     <property name="restitution" type="float" value="0.25"/>
@@ -260,7 +260,7 @@
   </object>
   <object id="103" name="stone" x="0" y="272" width="32" height="80">
    <properties>
-    <property name="BodyType" value="DynamicBody"/>
+    <property name="BodyType" value="StaticBody"/>
     <property name="friction" type="float" value="0"/>
     <property name="gravityScale" type="float" value="1"/>
     <property name="restitution" type="float" value="0.25"/>
@@ -268,7 +268,7 @@
   </object>
   <object id="104" name="stone" x="352" y="336" width="10.8125" height="15.8125">
    <properties>
-    <property name="BodyType" value="DynamicBody"/>
+    <property name="BodyType" value="StaticBody"/>
     <property name="friction" type="float" value="0"/>
     <property name="gravityScale" type="float" value="1"/>
     <property name="restitution" type="float" value="0.25"/>
@@ -276,7 +276,7 @@
   </object>
   <object id="105" name="stone" x="261.125" y="336" width="26.625" height="15.8125">
    <properties>
-    <property name="BodyType" value="DynamicBody"/>
+    <property name="BodyType" value="StaticBody"/>
     <property name="friction" type="float" value="0"/>
     <property name="gravityScale" type="float" value="1"/>
     <property name="restitution" type="float" value="0.25"/>
