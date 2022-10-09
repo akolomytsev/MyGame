@@ -30,8 +30,6 @@ import com.mygdx.game.enums.Actions;
 import com.mygdx.game.persons.Bullet;
 import com.mygdx.game.persons.Hero;
 
-
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
