@@ -16,7 +16,9 @@ public class AnimationMan {
         TextureRegion[][] regions = reg1.split(img.getWidth()/col, img.getHeight()/row);
         TextureRegion[] tmp = new TextureRegion[regions.length*regions[0].length];
         int cnt = 0;
-        for (TextureRegion[] region : regions) {for (TextureRegion reg: region) tmp[cnt++] = reg;}
+        for (TextureRegion[] region : regions) {
+            for (TextureRegion reg: region) tmp[cnt++] = reg;
+        }
         anm = new Animation<>(1/fps, tmp);
         anm.setPlayMode(playMode);
     }

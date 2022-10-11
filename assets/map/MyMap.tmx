@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="60" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="106">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="60" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="110">
  <tileset firstgid="1" name="тайлы2" tilewidth="16" tileheight="16" spacing="1" tilecount="198" columns="18">
   <image source="тайлы2.png" width="306" height="199"/>
   <tile id="130">
@@ -282,6 +282,14 @@
     <property name="restitution" type="float" value="0.25"/>
    </properties>
   </object>
+  <object id="109" name="coins" x="921.672" y="75.1875" width="1.65625" height="1.625">
+   <properties>
+    <property name="BodyType" value="DynamicBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="7" name="lava">
   <object id="55" name="lava" x="240" y="256" width="48" height="4.63636">
@@ -333,7 +341,7 @@
   </object>
  </objectgroup>
  <objectgroup id="5" name="dinam">
-  <object id="24" name="coins" x="186.25" y="67.375" width="1.65625" height="1.625">
+  <object id="24" name="coins" x="87.25" y="60.875" width="1.65625" height="1.625">
    <properties>
     <property name="BodyType" value="DynamicBody"/>
     <property name="friction" type="float" value="0"/>
@@ -341,7 +349,7 @@
     <property name="restitution" type="float" value="0.25"/>
    </properties>
   </object>
-  <object id="25" name="coins" x="141.922" y="43.1875" width="1.65625" height="1.625">
+  <object id="25" name="coins" x="149.922" y="42.1875" width="1.65625" height="1.625">
    <properties>
     <property name="BodyType" value="DynamicBody"/>
     <property name="friction" type="float" value="0"/>
@@ -365,7 +373,7 @@
     <property name="restitution" type="float" value="0.25"/>
    </properties>
   </object>
-  <object id="28" name="coins" x="293.081" y="54.733" width="1.65625" height="1.625">
+  <object id="28" name="coins" x="301.581" y="59.733" width="1.65625" height="1.625">
    <properties>
     <property name="BodyType" value="DynamicBody"/>
     <property name="friction" type="float" value="0"/>
@@ -373,7 +381,7 @@
     <property name="restitution" type="float" value="0.25"/>
    </properties>
   </object>
-  <object id="29" name="coins" x="358.081" y="169.642" width="1.65625" height="1.625">
+  <object id="29" name="coins" x="514.581" y="286.642" width="1.65625" height="1.625">
    <properties>
     <property name="BodyType" value="DynamicBody"/>
     <property name="friction" type="float" value="0"/>
@@ -381,7 +389,7 @@
     <property name="restitution" type="float" value="0.25"/>
    </properties>
   </object>
-  <object id="30" name="coins" x="55.581" y="174.142" width="1.65625" height="1.625">
+  <object id="30" name="coins" x="103.581" y="173.142" width="1.65625" height="1.625">
    <properties>
     <property name="BodyType" value="DynamicBody"/>
     <property name="friction" type="float" value="0"/>
@@ -389,7 +397,7 @@
     <property name="restitution" type="float" value="0.25"/>
    </properties>
   </object>
-  <object id="31" name="coins" x="392.081" y="128.142" width="1.65625" height="1.625">
+  <object id="31" name="coins" x="420.581" y="128.142" width="1.65625" height="1.625">
    <properties>
     <property name="BodyType" value="DynamicBody"/>
     <property name="friction" type="float" value="0"/>
@@ -397,7 +405,7 @@
     <property name="restitution" type="float" value="0.25"/>
    </properties>
   </object>
-  <object id="32" name="coins" x="358.831" y="56.142" width="1.65625" height="1.625">
+  <object id="32" name="coins" x="502.331" y="34.642" width="1.65625" height="1.625">
    <properties>
     <property name="BodyType" value="DynamicBody"/>
     <property name="friction" type="float" value="0"/>
@@ -413,9 +421,25 @@
     <property name="restitution" type="float" value="0.25"/>
    </properties>
   </object>
+  <object id="106" name="coins" x="900.172" y="316.188" width="1.65625" height="1.625">
+   <properties>
+    <property name="BodyType" value="DynamicBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
+  <object id="107" name="coins" x="770.172" y="288.688" width="1.65625" height="1.625">
+   <properties>
+    <property name="BodyType" value="DynamicBody"/>
+    <property name="friction" type="float" value="0"/>
+    <property name="gravityScale" type="float" value="1"/>
+    <property name="restitution" type="float" value="0.25"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="6" name="Гера">
-  <object id="18" name="Гера" x="40.25" y="230.875" width="2" height="1.375">
+  <object id="18" name="Гера" x="40.25" y="230.875" width="1" height="1.78">
    <properties>
     <property name="BodyType" value="DynamicBody"/>
     <property name="friction" type="float" value="1"/>

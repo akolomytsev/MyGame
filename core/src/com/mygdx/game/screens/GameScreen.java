@@ -103,10 +103,11 @@ public class GameScreen implements Screen {
 
         batch = new SpriteBatch();
 
-        music = Gdx.audio.newMusic(Gdx.files.internal("George Thorogood - Bad to the Bone_(newmp3.org).mp3"));
-        music.setPan(0,0.001f);
+        music = Gdx.audio.newMusic(Gdx.files.internal("rock-n-roll-racing-gonki-pod-rok-n-roll-igrovaya-pristavka-hamy4-sega-dendy-born-to-be-wild-by-steppenwolf_(mp3IQ.net).mp3"));
+        music.setPan(0,0.005f);
         music.setLooping(true);
         music.play();
+        sound = Gdx.audio.newSound(Gdx.files.internal("cokot-kablukov-po-trotuaru.mp3"));
 
         camera = new OrthographicCamera();
         camera.zoom = 0.2f;
@@ -161,14 +162,8 @@ public class GameScreen implements Screen {
 
         hero.setFPS(body.getLinearVelocity(), true);// получает текущую линейную скорость тела
 
-//        if(myInputProcessor.isSitting()){
-//            hero.setState(Actions.SIT);
-//        } else if(myInputProcessor.isUp()){
-//            hero.setState(Actions.UP);
-//        } else {hero.setState(Actions.STAND);}
-
         Rectangle tmp = hero.getRect(camera, hero.getFrame());
-        ((PolygonShape)body.getFixtureList().get(0).getShape()).setAsBox(tmp.width/2, tmp.height/2);// Высчитываем размер нашего полигона в данное кремя (всех полигонов из атласа)
+        ((PolygonShape)body.getFixtureList().get(0).getShape()).setAsBox(tmp.width/2, tmp.height/2);// Высчитываем размер нашего полигона в данное время (всех полигонов из атласа)
         ((PolygonShape)body.getFixtureList().get(1).getShape()).setAsBox(tmp.width/3, tmp.height/10, new Vector2(0,-tmp.height/2), 0);
 
         batch.setProjectionMatrix(camera.combined);
@@ -199,9 +194,7 @@ public class GameScreen implements Screen {
 
         for (Body bd: bodyToDelete){
             if (bd.getUserData() != null && bd.getUserData().equals("coins")){ coins++;}
-            if (bd.getUserData() != null && bd.getUserData().equals("coins"))
-
-
+            if (bd.getUserData() != null && bd.getUserData().equals("coins"));
             gamePhysics.destroyBody(bd);// удаляем сами тела из физики
         }
         bodyToDelete.clear(); //зачем чистим

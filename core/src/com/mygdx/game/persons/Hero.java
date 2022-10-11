@@ -1,5 +1,7 @@
 package com.mygdx.game.persons;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -14,18 +16,20 @@ import java.util.HashMap;
 
 public class Hero {
     HashMap<Actions, Animation<TextureRegion>> manAssetss; //
-    private final float FPS = 1/7f;// Основная скорость персонажа вынесена константой
+    private final Sound sound;
+    private final float FPS = 1/5f;// Основная скорость картинки персонажа вынесена константой
     private float time;// время
-    public static boolean canJump, isFire;//
+    public static boolean canJump, isFire, isUp, isSitting;//
     private Animation<TextureRegion> baseAnm;//
     private boolean loop;//
     private TextureAtlas atlas;// текстурный атлас героя
     private Body body;//
     private Dir dir;//
-    private static float dScale = 7f;// принудительный масштаб атласа героя
+    private static float dScale = 6f;// принудительный масштаб атласа героя
 
     private float hitPoints, live;
     public enum Dir{A, D}//
+//    private Sound sound;
 
 
 public Hero(Body body){// конструктор описывающий физическое тело в игровом физическом мире
@@ -34,6 +38,7 @@ public Hero(Body body){// конструктор описывающий физи
 
         manAssetss = new HashMap<>();//
         atlas = new TextureAtlas("atlas/men.atlas");//
+        sound = Gdx.audio.newSound(Gdx.files.internal("cokot-kablukov-po-trotuaru.mp3"));
 
         manAssetss.put(Actions.STAND, new Animation<TextureRegion>(FPS, atlas.findRegions("stand")));//
         manAssetss.put(Actions.RUN, new Animation<TextureRegion>(FPS, atlas.findRegions("run")));//
@@ -44,6 +49,7 @@ public Hero(Body body){// конструктор описывающий физи
         baseAnm = manAssetss.get(Actions.STAND);//
         loop = true;//
         dir = Dir.D;//
+
 }
 
     public float getHit (float damage){
@@ -71,19 +77,20 @@ public Hero(Body body){// конструктор описывающий физи
         }
         if (Math.abs(vector.x) > 0.25f && Math.abs(vector.y) < 10 && onGround) {// увеличиваем скорость отображения картинки
             setState(Actions.RUN);//
+            //sound.play();
             baseAnm.setFrameDuration(1/tmp);//
             return null;
         }
-        if (Math.abs(vector.y) > 1 && canJump) {// если герой прыгает, то FPS устанавливается по умолчанию
+        if (Math.abs(vector.y) > 0.001F /*&& canJump*/) {// если герой прыгает, то FPS устанавливается по умолчанию
             setState(Actions.JUMP);// переключаемся в прыжок
-            baseAnm.setFrameDuration(FPS);//
-            return null;
+//            baseAnm.setFrameDuration(FPS);//
+//            return null;
         }
-//        if(myInputProcessor.isSitting()){
-//            hero.setState(Actions.SIT);
-//        } else if(myInputProcessor.isUp()){
-//            hero.setState(Actions.UP);
-//        } else {hero.setState(Actions.STAND);}
+        if(isSitting){
+            setState(Actions.SIT);
+        } else if(isUp){
+            setState(Actions.UP);
+        }
         return null;
     }
 

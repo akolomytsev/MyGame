@@ -30,11 +30,11 @@ public class MyInputProcessor implements InputProcessor {
         String inKey = Input.Keys.toString(keycode).toUpperCase();
 
         switch (inKey){
-            case "A": outForce.add(-0.002F, 0);break;
-            case "D": outForce.add(0.002F, 0);break;
-            case "SPACE": if (MyContactListener.cnt>0) outForce.add(0, 0.02F);break;
-            case "S": sitting = true; break;
-            case  "W" : up = true; break;
+            case "A": outForce.add(-0.0012F, 0);break;
+            case "D": outForce.add(0.0012F, 0);break;
+            case "SPACE": if (MyContactListener.cnt>0) outForce.add(0, 0.012F);break;
+            case "S": Hero.isSitting = true; break;
+            case  "W" : Hero.isUp = true; break;
             case  "L" : Hero.isFire = true;break;
 
         }
@@ -48,9 +48,9 @@ public class MyInputProcessor implements InputProcessor {
         switch (inKey){
             case "A": outForce.set(0, outForce.y);break;
             case "D": outForce.set(0, outForce.y);break;
-            case "S": sitting = false; break;
+            case "S": Hero.isSitting = false; break;
             case "SPACE": outForce.set(outForce.x, 0);break;
-            case  "W" : up = false; break;
+            case  "W" : Hero.isUp = false; break;
             case  "L" : Hero.isFire = false;break;
 
         }

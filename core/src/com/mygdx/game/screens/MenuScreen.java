@@ -28,7 +28,7 @@ public class MenuScreen implements Screen {
         batch = new SpriteBatch();
 
         music = Gdx.audio.newMusic(Gdx.files.internal("George Thorogood - Bad to the Bone_(newmp3.org).mp3"));
-        music.setPan(0, 0.001f);
+        music.setPan(0, 0.005f);
         music.setLooping(true);
         music.play();
     }

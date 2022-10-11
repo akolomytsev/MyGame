@@ -76,7 +76,6 @@ public class MyContactListener implements ContactListener {
         }
         if (b.getUserData().equals("legs") && a.getUserData().equals("damage")){ //
             isDamage = false;
-
         }
     }
 
