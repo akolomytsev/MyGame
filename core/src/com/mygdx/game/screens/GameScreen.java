@@ -194,7 +194,7 @@ public class GameScreen implements Screen {
 
         for (Body bd: bodyToDelete){
             if (bd.getUserData() != null && bd.getUserData().equals("coins")){ coins++;}
-            if (bd.getUserData() != null && bd.getUserData().equals("coins"));
+            //if (bd.getUserData() != null && bd.getUserData().equals("coins"));
             gamePhysics.destroyBody(bd);// удаляем сами тела из физики
         }
         bodyToDelete.clear(); //зачем чистим
@@ -210,8 +210,10 @@ public class GameScreen implements Screen {
                 game.setScreen(new GameOverScreen(game));
             }
         }
-
-
+        if (coins >= 10){
+            dispose();
+            game.setScreen(new VictoryScreen(game));
+            }
     }
 
     @Override
